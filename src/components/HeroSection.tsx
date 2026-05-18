@@ -136,7 +136,7 @@ export const HeroSection = () => {
               {/* Video container */}
               <div className="relative rounded-lg overflow-hidden cyber-border p-2">
                 <img
-                  src="/images/image.png"
+                  src="/favicon.png"
                   alt="Cybersecurity visualization"
                   className="w-full h-full object-cover rounded"
                 />
