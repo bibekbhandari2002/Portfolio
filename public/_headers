@@ -1,0 +1,89 @@
+/*
+  # Security Headers for Production Deployment
+  # Netlify _headers configuration file
+  # Complements netlify.toml security configuration
+  # Reference: https://docs.netlify.com/routing/headers/
+  
+  ## Security Header Descriptions:
+  
+  Strict-Transport-Security (HSTS):
+  - Forces HTTPS connections for 2 years
+  - includeSubDomains: Apply to all subdomains
+  - preload: Allows inclusion in browser preload lists for even faster HTTPS enforcement
+  - Impact: Protects against protocol downgrades and man-in-the-middle attacks
+  
+  X-Frame-Options (Clickjacking Protection):
+  - DENY: Prevents framing of the site entirely
+  - Impact: Blocks malicious sites from embedding this portfolio in hidden frames
+  
+  X-Content-Type-Options (MIME Sniffing Prevention):
+  - nosniff: Prevents browser from guessing content types
+  - Impact: Stops attackers from exploiting content-type confusion vulnerabilities
+  
+  Referrer-Policy:
+  - strict-no-referrer: No referrer info sent anywhere
+  - Impact: Maximizes privacy, prevents leaking URLs to third parties
+  
+  Permissions-Policy:
+  - Explicitly disables dangerous APIs
+  - Impact: Prevents JavaScript from accessing camera, microphone, geolocation, etc.
+  
+  Content-Security-Policy (CSP):
+  - Whitelist approach: Only allow specific sources for each resource type
+  - Impact: Primary defense against XSS attacks
+  - Specifically tuned for React/Vite SPA with Framer Motion and Lucide React
+  
+  Cross-Origin-* headers:
+  - Isolates the page from other origins
+  - Impact: Prevents Spectre/Meltdown-like attacks via cross-origin access
+  
+  X-XSS-Protection:
+  - Legacy browser protection (1; mode=block)
+  - Impact: Defense in depth for older browsers
+#
+
+# All static assets - aggressive caching + security
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# HTML files - no caching to ensure fresh CSP headers
+/*.html
+  Cache-Control: public, max-age=3600, must-revalidate
+  X-Content-Type-Options: nosniff
+
+# Index.html - special handling for SPA routing
+/index.html
+  Cache-Control: no-cache, no-store, must-revalidate
+  Pragma: no-cache
+  Expires: 0
+
+# Fonts and images - permanent caching
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+  Access-Control-Allow-Origin: *
+  X-Content-Type-Options: nosniff
+
+/images/*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+/favicon*
+  Cache-Control: public, max-age=31536000, immutable
+  X-Content-Type-Options: nosniff
+
+# Default security headers for all responses
+/*
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-no-referrer
+  Permissions-Policy: accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), display-capture=(), document-domain=(), encrypted-media=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self), sync-xhr=(), usb=(), xr-spatial-tracking=()
+  Content-Security-Policy: default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https://api.emailjs.com https://cdn.jsdelivr.net; manifest-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests; block-all-mixed-content
+  X-UA-Compatible: IE=edge
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  X-Permitted-Cross-Domain-Policies: none
+  X-XSS-Protection: 1; mode=block
+  Expect-CT: max-age=86400, enforce
