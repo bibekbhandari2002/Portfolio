@@ -46,7 +46,7 @@ export const AboutSection = () => {
               <div className="relative p-1 rounded-lg cyber-border bg-card">
                 <div className="relative overflow-hidden rounded">
                   <img
-                    src="/images/mypic.jpg"
+                    src="/mypic.jpg"
                     alt="Bibek Bhandari"
                     className="w-64 h-80 object-cover cursor-pointer transition-transform group-hover:scale-105"
                     onClick={() => setIsLightboxOpen(true)}
