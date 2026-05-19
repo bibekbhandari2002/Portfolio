@@ -104,10 +104,6 @@ export const AboutSection = () => {
                 <p>
                   Beyond AI security research, I also work with malware analysis, reverse engineering, threat modeling, and cloud/container security using tools and platforms such as Ghidra, Docker, Kubernetes, and AWS security services. I enjoy understanding how attacks work at both the systems and model level to design security mechanisms that are practical, resilient, and trustworthy.
                 </p>
-              
-                <p>
-                  My long-term goal is to contribute to research at the intersection of cybersecurity and trustworthy AI, particularly in building secure intelligent systems that can operate reliably in real-world environments.
-                </p>
               </div>
             </div>
 
